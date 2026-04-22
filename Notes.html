@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Notes</title>
+</head>
+<body>
+
+<h1>My Notes</h1>
+
+<h3>4 load and explore </h3>
+<pre><code>
+import pandas as pd
+
+<td>def load_data(file):</td>
+    if file.endswith('.csv'):
+        df = pd.read_csv(file)
+    elif file.endswith('.xlsx'):
+        df = pd.read_excel(file)
+    else:
+        print("Unsupported file format. Please provide a CSV or Excel file.")
+        return
+    
+    print("Dataset information:")
+    print(df.info())
+    print("\nTop rows of the dataset:")
+    print(df.head(1))
+
+file = 'train.csv'
+load_data(file)
+</code></pre>
+<hr>
+
+<h3>5 csv excel files</h3>
+<pre><code>import pandas as pd
+   def load_data(file):
+    if file.endswith(".csv"):
+        df = pd.read_csv(file)
+    elif file.endswith(".xlsx") or file.endswith(".xls"):
+        df = pd.read_excel(file)
+    else:
+        print("Unsupported file format. Please provide a CSV or Excel file.")
+        return
+
+    print("Dataset Information:")
+    print(df.info())
+
+
+    print("\nTop rows of the dataset:")
+    print(df.head(4))
+
+    print("\nSummary of Statistics:")
+    print(df.describe())
+
+    print("\nUnique values for categorical columns:")
+    for column in df.select_dtypes(include='object').columns:
+        print(f"\nColumn: {column}")
+        print(df[column].unique())
+
+file = "iris.csv"
+
+load_data(file)
+</code></pre>
+<hr>
+
+
+<h3>6 visulize gain</h3>
+<pre><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+df=pd.read_csv('iris.csv')
+print df.head(2)
+
+sns.pairplot(df,hue='Species')
+sns.set_theme(style="darkgrid")
+plt.show()
+
+plt.figure(figsize=(6,4))
+sns.scatterplot(x='sepallengthCm.',y='SepalwidthCm',hue='species',data=df)
+plt.title("Scatter plot of SepallengthCm vs SepalWidthCm")
+plt.show()
+sns.countplot(x='Species',data=df,hue = 'Species')
+</code></pre>
+<hr>
+
+<h3>7 feature scaling </h3>
+<pre><code> import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import  LabelEncoder, StandardScaler
+from sklearn.linear_model import  LogisticRegression
+from sklearn.metrics import accuracy_score
+
+df=pd.read_csv('train.csv')
+df['Age']=(df['Age'].fillna(df['Age']),median() )
+df['Age']=(df['Fare'].fillna(df['Fare']),median() )
+df['Embarked']=(df['Embarked'].fillna(df['Embarked']).mode()[0])
+
+df=df.drop(['cabin','Name','Ticket'],axis=1)
+
+label_encoder=LabelEncoder()
+df['Sex']= label_encoder.fit_transform(df['Sex'])
+df['Embarked']=le.fit_transform(df['Embarked'])
+
+scaler=StandardScaler()
+df[['Age','Fare']]=scaler.fit_transform(df['Age','Fare'])
+print(df.head(10))
+
+X = df.drop(columns = ['Survived'],axis=1)
+y=df['Survived']
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_state=42)
+
+model=LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+y_pred=model.predict(X_test)
+print("Accuracy:"accuracy_score(y_test, y_pred))
+
+</code></pre>
+<hr>
+<h3>knn</h3>
+<pre><code>import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+from sklearn.datasets import load_iris
+iris = load_iris()
+X = iris.data  
+y = iris.target  
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+knn_model = KNeighborsClassifier(n_neighbors=3)
+
+knn_model.fit(X_train, y_train)
+
+y_pred = knn_model.predict(X_test)
+
+acc = accuracy_score(y_test, y_pred)
+
+print("Accuracy:", acc)
+
+print("Classification Report:\n", classification_report(y_test, y_pred))
+</code></pre>
+<hr>
+
+<h3>9 linear regression</h3>
+<pre><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+iris=load_iris()
+x=pd.Dataframe (iris.data,column=iris.feature_names)
+y=x['petal length (m)']
+x=x.drop(columns=['petal length (m)'])
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_state=42)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+print("Root Mean Squared error:",mean_squared_error(y_test,y_pred))
+print('R2-Square:',r2_score(y_test,y_pred))
+</code></pre>
+<hr>
+<h3>decision tree</h3>
+<pre><code>
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.tree import Decision TreeClassifier, plot tree
+
+from sklearn.datasets import load iris
+iris load_iris()
+Xiris.data
+yiris.target
+
+X_train, X test, y train, y test train_test_split(X,y, test size:0.2, random state=42)
+
+dtc DecisionTreeClassifier()
+dtc.fit(X_train, y train)
+plt.figure(figsize=(12, 8))
+
+plot_tree(dtc, feature_names iris.feature_names,class_names=iris.target names, filled=True)
+plt.show()</code></pre>
+
+<h3>10 k-means</h3>
+<pre><code>
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.datasets import make blobs
+
+#Step 1: Create some sample data (paints on a graph) X, y make blobs (n_samples=300, centers=3, random state=42)
+
+#Step 2: Tell K-Means to make 3 groups (clusters)
+
+kmeans KMeans(n_clusters=3)
+
+kmeans.fit(X)
+
+#Step 3: Find out which group each point belongs to labels kmeans.predict(X)
+
+#Step 4: Show the points with colors for each group
+
+plt.scatter (X), 0], X, 1, colabels, cmap='rainbow")
+
+#Step 5: Show the center of each group (big red Xx)
+
+centers kmeans.cluster centers
+plt.scatter(centers, 0, centers, 1), cz'red', marker='X', s=200)
+plt.title("K-Means Clustering")
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.show()</code></pre>
+<hr>
+
+<a href="index.html">Back to Home</a>
+
+</body>
+</html>
